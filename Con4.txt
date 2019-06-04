@@ -1,0 +1,162 @@
+ //leave these top 4 lines at the top
+        playerBlack = "we";  //put player1 name here
+        showText(playerBlack,70,100); //shows your name
+        GreenfootImage image1 = new GreenfootImage("black.png"); //sets image to black checker
+        String colorInitial = new String("b"); //fills the 2d array grid with this value
+        
+        
+        
+        
+        //replace the following code with your strategy
+        //but the second line shows you how to place your checker
+        if (firstPlay)
+        {
+            placeCol(3,colorInitial,image1);
+        }
+        
+        //AttackLR
+        for(int c=0;c<7;c++){
+            for(int r=5;r>-1;r--){
+                boolean notNull=grid[r][c]!=null;
+                if(notNull&&grid[r][c].equals(colorInitial)){
+                    // System.out.println(r+":"+c+" -"+"CheckSide");
+                    int count=1;
+                    int emp=0;
+                    //no idea what col does :)
+                    for(int col=c;col<4;col++){   
+                        for(int c2=c+1;c2<(c+4);c2++){
+                            //System.out.println(r+":"+c+":"+col+":"+c2+"-WinSide");
+                            if(grid[r][c2]==null){
+                                emp=c2;
+                            }else if(grid[r][c2].equals(colorInitial)){
+                                count++;
+                            }
+                            if(count==3&&grid[r][emp]==null){
+                                System.out.println(r+":"+c2+" -WinnnerLR");
+                                placeCol(emp,colorInitial,image1);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        //Attack up
+        for(int r=5;r>2;r--){
+            for(int c=0;c<grid[0].length;c++){
+                boolean notNull=grid[r][c]!=null;
+                if(notNull&&grid[r][c].equals(colorInitial)){
+                    //System.out.println(r+":"+c+" -"+"CheckUp");
+                    if(grid[r-1][c]!=null&&grid[r-1][c].equals(colorInitial)&&grid[r-2][c]!=null&&grid[r-2][c].equals(colorInitial)){
+                      if(grid[r-3][c]==null){
+                            System.out.println(r+":"+c+" -"+"UpWin");
+                            placeCol(c,colorInitial,image1);
+                        }
+                    }
+                    
+                }
+            }
+        }
+        //Defence Up
+        for(int c=0;c<7;c++){
+            for(int r=5;r>2;r--){
+                boolean notNull=grid[r][c]!=null;
+                if(notNull&&!grid[r][c].equals(colorInitial)){
+                    //System.out.println(r+":"+c+" -"+"UpDefCheck");
+                    if(grid[r-1][c]!=null&&!grid[r-1][c].equals(colorInitial)&&grid[r-2][c]!=null&&!grid[r-2][c].equals(colorInitial)){
+                        if(grid[r-3][c]==null){
+                            System.out.println(r+":"+c+" -"+"Good def");
+                            placeCol(c,colorInitial,image1);
+                        }
+                    }
+                    
+                }
+            }
+        }
+        //Defence LR
+        for(int r=5;r>-1;r--){
+            for(int c=0;c<7;c++){
+                boolean notNull=grid[r][c]!=null;
+                if(notNull&&!grid[r][c].equals(colorInitial)){
+                    // System.out.println(r+":"+c+" -"+"CheckSide");
+                    int count=1;
+                    int emp=0;
+                    //no idea what col does :)
+                    for(int col=c;col<4;col++){   
+                        for(int c2=c+1;c2<(c+4);c2++){
+                            System.out.println(r+":"+c+":"+col+":"+c2+"-DefSide");
+                            if(grid[r][c2]==null){
+                                emp=c2;
+                            }else if(!grid[r][c2].equals(colorInitial)){
+                                count++;
+                            }
+                            if(count==3&&grid[r][emp]==null){
+                                System.out.println(r+":"+c2+":"+emp+" -GoodDefLR");
+                                placeCol(emp,colorInitial,image1);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        for(int r=5;r>2;r--){
+            for(int c=0;c<4;c++){
+                int count=0;
+                int emp=0;
+                boolean notNull=grid[r][c]!=null;
+                if(notNull&&!grid[r][c].equals(colorInitial)){
+                
+                }
+            }
+        }
+
+        
+        
+        
+        MyWorld w1 = new MyWorld();
+        String[][] dolev = w1.getGrid();
+        
+        
+        
+      
+        String otherColor = "";
+        if (colorInitial.equals("b"))
+            otherColor  = "r";
+        else
+            otherColor = "b";
+        
+        for (int r = 0; r < dolev.length; r++)
+            {
+                for (int c = 0; c < dolev[0].length; c++)
+                {
+                    dolev[r][c] = grid[r][c];
+                    
+                }
+            }
+        
+        for (int col = 0; col < 7; col++)
+        {
+            w1.placeCol(col,colorInitial,image1);
+            if(w1.checkForWinner() != null && w1.checkForWinner().equals(otherColor))
+            {
+               placeCol(col,colorInitial,image1);
+               System.out.println("defense");
+            }
+            for (int r = 0; r < dolev.length; r++)
+            {
+                for (int c = 0; c < dolev[0].length; c++)
+                {
+                    dolev[r][c] = grid[r][c];
+                    
+                }
+            }
+        }
+        
+       
+        
+        
+            int colToPlace = (int)(Math.random()*7);
+            placeCol(colToPlace,colorInitial,image1);
+            //pl    aceCol(colToPlace,colorInitial,image1);  //plays in the specified col and fills the 2D array with the 2nd parameter String
+        
+        
